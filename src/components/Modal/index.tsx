@@ -1,7 +1,7 @@
 import React, {
   forwardRef, memo, useEffect, useImperativeHandle, useState,
 } from 'react';
-import { GestureResponderEvent, Modal, Pressable } from 'react-native';
+import { GestureResponderEvent, Modal, Pressable, View } from 'react-native';
 import Animated, {
   cancelAnimation, interpolate, runOnJS, useAnimatedGestureHandler, useAnimatedReaction,
   useAnimatedStyle,
