@@ -4,19 +4,6 @@ import StoryAvatar from '../Avatar';
 import { StoryAvatarListProps } from '../../core/dto/componentsDTO';
 import { InstagramStoryProps } from '../../core/dto/instagramStoriesDTO';
 
-let FlashList: any;
-
-try {
-
-  // eslint-disable-next-line global-require
-  FlashList = require( '@shopify/flash-list' ).FlashList;
-
-} catch ( error ) {
-
-  FlashList = null;
-
-}
-
 const StoryAvatarList: FC<StoryAvatarListProps> = ( {
   stories, loadingStory, seenStories, colors, seenColors, size,
   showName, nameTextStyle, nameTextProps,
@@ -39,22 +26,6 @@ const StoryAvatarList: FC<StoryAvatarListProps> = ( {
       key={`avatar${story.id}`}
     />
   );
-
-  if ( FlashList ) {
-
-    return (
-      <FlashList
-        horizontal
-        {...avatarListContainerProps}
-        data={stories}
-        renderItem={( { item } : { item: InstagramStoryProps } ) => renderItem( item )}
-        keyExtractor={( item: InstagramStoryProps ) => item.id}
-        contentContainerStyle={avatarListContainerStyle}
-        testID="storiesList"
-      />
-    );
-
-  }
 
   return (
     <ScrollView horizontal {...avatarListContainerProps} contentContainerStyle={avatarListContainerStyle} testID="storiesList">
