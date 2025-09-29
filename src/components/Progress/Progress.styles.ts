@@ -1,17 +1,17 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
-export default StyleSheet.create( {
+export default StyleSheet.create({
   container: {
-    position: 'absolute',
-    top: 16,
+    position: "absolute",
+    top: 0,
     left: 16,
     height: 2,
-    flexDirection: 'row',
+    flexDirection: "row",
     gap: 4,
   },
   item: {
     height: 3,
     borderRadius: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
-} );
+});
