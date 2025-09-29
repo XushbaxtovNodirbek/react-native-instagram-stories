@@ -1,25 +1,33 @@
-import { SharedValue } from 'react-native-reanimated';
+import { SharedValue } from "react-native-reanimated";
 import {
-  ImageProps, ImageStyle, TextProps, TextStyle, ViewStyle,
-} from 'react-native';
-import { ReactNode } from 'react';
-import { InstagramStoriesProps, InstagramStoryProps, StoryItemProps } from './instagramStoriesDTO';
-import { ProgressStorageProps } from './helpersDTO';
+  ImageProps,
+  ImageStyle,
+  TextProps,
+  TextStyle,
+  ViewStyle,
+} from "react-native";
+import { ReactNode } from "react";
+import {
+  InstagramStoriesProps,
+  InstagramStoryProps,
+  StoryItemProps,
+} from "./instagramStoriesDTO";
+import { ProgressStorageProps } from "./helpersDTO";
 
 export interface StoryAvatarListProps {
   stories: InstagramStoryProps[];
-  loadingStory: StoryAvatarProps['loadingStory'];
-  seenStories: StoryAvatarProps['seenStories'];
-  colors: StoryAvatarProps['colors'];
-  seenColors: StoryAvatarProps['seenColors'];
-  size: StoryAvatarProps['size'];
-  showName: InstagramStoriesProps['showName'];
-  nameTextStyle: InstagramStoriesProps['nameTextStyle'];
-  nameTextProps: InstagramStoriesProps['nameTextProps'];
-  avatarListContainerStyle: InstagramStoriesProps['avatarListContainerStyle'];
-  avatarListContainerProps: InstagramStoriesProps['avatarListContainerProps'];
+  loadingStory: StoryAvatarProps["loadingStory"];
+  seenStories: StoryAvatarProps["seenStories"];
+  colors: StoryAvatarProps["colors"];
+  seenColors: StoryAvatarProps["seenColors"];
+  size: StoryAvatarProps["size"];
+  showName: InstagramStoriesProps["showName"];
+  nameTextStyle: InstagramStoriesProps["nameTextStyle"];
+  nameTextProps: InstagramStoriesProps["nameTextProps"];
+  avatarListContainerStyle: InstagramStoriesProps["avatarListContainerStyle"];
+  avatarListContainerProps: InstagramStoriesProps["avatarListContainerProps"];
   avatarBorderRadius?: number;
-  onPress: ( id: string ) => void;
+  onPress: (id: string) => void;
 }
 
 export interface StoryAvatarProps extends InstagramStoryProps {
@@ -39,6 +47,7 @@ export interface StoryLoaderProps {
   loading: SharedValue<boolean>;
   color: SharedValue<string[]>;
   size?: number;
+  count?: number;
 }
 
 export interface StoryModalProps {
@@ -62,38 +71,38 @@ export interface StoryModalProps {
   footerComponent?: ReactNode;
   hideElementsOnLongPress?: boolean;
   hideOverlayViewOnLongPress?: boolean;
-  loopingStories?: 'none' | 'all' | 'onlyLast';
+  loopingStories?: "none" | "all" | "onlyLast";
   statusBarTranslucent?: boolean;
   loaderColor?: string;
   loaderBackgroundColor?: string;
   onLoad: () => void;
-  onShow?: ( id: string ) => void;
-  onHide?: ( id: string ) => void;
-  onSeenStoriesChange: ( user: string, value: string ) => void;
-  onSwipeUp?: ( userId?: string, storyId?: string ) => void;
-  onStoryStart?: ( userId?: string, storyId?: string ) => void;
-  onStoryEnd?: ( userId?: string, storyId?: string ) => void;
+  onShow?: (id: string) => void;
+  onHide?: (id: string) => void;
+  onSeenStoriesChange: (user: string, value: string) => void;
+  onSwipeUp?: (userId?: string, storyId?: string) => void;
+  onStoryStart?: (userId?: string, storyId?: string) => void;
+  onStoryEnd?: (userId?: string, storyId?: string) => void;
 }
 
 export type StoryModalPublicMethods = {
-  show: ( id: string ) => void;
+  show: (id: string) => void;
   hide: () => void;
   pause: () => void;
   resume: () => void;
   isPaused: () => boolean;
   goToPreviousStory: () => void;
   goToNextStory: () => void;
-  getCurrentStory: () => { userId?: string, storyId?: string };
-  goToSpecificStory: ( userId: string, index?: number ) => void;
+  getCurrentStory: () => { userId?: string; storyId?: string };
+  goToSpecificStory: (userId: string, index?: number) => void;
 };
 
 export type GestureContext = {
-  x: number,
-  pressedX: number,
-  pressedAt: number,
-  moving: boolean,
-  vertical: boolean,
-  userId?: string,
+  x: number;
+  pressedX: number;
+  pressedAt: number;
+  moving: boolean;
+  vertical: boolean;
+  userId?: string;
 };
 
 export interface AnimationProps {
@@ -103,7 +112,7 @@ export interface AnimationProps {
 }
 
 export interface StoryImageProps {
-  stories: InstagramStoryProps['stories'];
+  stories: InstagramStoryProps["stories"];
   activeStory: SharedValue<string | undefined>;
   defaultStory?: StoryItemProps;
   isDefaultVideo: boolean;
@@ -116,8 +125,8 @@ export interface StoryImageProps {
   videoDuration?: number;
   loaderColor?: string;
   loaderBackgroundColor?: string;
-  onImageLayout: ( height: number ) => void;
-  onLoad: ( duration?: number ) => void;
+  onImageLayout: (height: number) => void;
+  onLoad: (duration?: number) => void;
 }
 
 export interface StoryProgressProps {
@@ -130,13 +139,14 @@ export interface StoryProgressProps {
   progressContainerStyle?: ViewStyle;
 }
 
-export interface StoryProgressItemProps extends Omit<StoryProgressProps, 'length'> {
+export interface StoryProgressItemProps
+  extends Omit<StoryProgressProps, "length"> {
   index: number;
   width: number;
 }
 
 export interface StoryHeaderProps {
-  avatarSource: ImageProps['source'];
+  avatarSource: ImageProps["source"];
   name?: string;
   avatarSize: number;
   textStyle?: TextStyle;
@@ -153,7 +163,7 @@ export interface IconProps {
 }
 
 export interface StoryContentProps {
-  stories: InstagramStoryProps['stories'];
+  stories: InstagramStoryProps["stories"];
   active: SharedValue<boolean>;
   activeStory: SharedValue<string | undefined>;
 }
@@ -179,13 +189,13 @@ export interface StoryListProps extends InstagramStoryProps, StoryHeaderProps {
   videoDuration?: number;
   loaderColor?: string;
   loaderBackgroundColor?: string;
-  onLoad: ( duration?: number ) => void;
+  onLoad: (duration?: number) => void;
 }
 
 export interface StoryVideoProps {
-  source: ImageProps['source'];
+  source: ImageProps["source"];
   paused: SharedValue<boolean>;
   isActive: SharedValue<boolean>;
-  onLoad: ( duration: number ) => void;
-  onLayout: ( height: number ) => void;
+  onLoad: (duration: number) => void;
+  onLayout: (height: number) => void;
 }
