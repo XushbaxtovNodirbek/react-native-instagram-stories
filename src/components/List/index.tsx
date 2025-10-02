@@ -42,7 +42,7 @@ const StoryList: FC<StoryListProps> = ({
   loaderBackgroundColor,
   ...props
 }) => {
-  const imageHeight = useSharedValue(HEIGHT);
+  const imageHeight = useSharedValue(HEIGHT - 150);
   const isActive = useDerivedValue(() => activeUser.value === id);
 
   const activeStoryIndex = useDerivedValue(() =>
@@ -57,7 +57,7 @@ const StoryList: FC<StoryListProps> = ({
   }));
 
   const onImageLayout = (height: number) => {
-    imageHeight.value = height;
+    // imageHeight.value = height;
   };
 
   const lastSeenIndex = stories.findIndex(
@@ -65,66 +65,68 @@ const StoryList: FC<StoryListProps> = ({
   );
 
   return (
-    <StoryAnimation x={x} index={index}>
-      <Animated.View style={[animatedStyles, { justifyContent: "flex-end" }]}>
-        <Progress
-          active={isActive}
-          activeStory={activeStoryIndex}
-          progress={progress}
-          length={stories.length}
-          progressColor={progressColor}
-          progressActiveColor={progressActiveColor}
-          progressContainerStyle={progressContainerStyle}
-        />
-        <Animated.View style={ListStyles.container}>
-          <StoryImage
-            stories={stories}
-            activeStory={activeStory}
-            defaultStory={stories[lastSeenIndex + 1] ?? stories[0]}
-            isDefaultVideo={
-              (stories[lastSeenIndex + 1]?.mediaType ??
-                stories[0]?.mediaType) === "video"
-            }
-            onImageLayout={onImageLayout}
-            onLoad={onLoad}
-            paused={paused}
-            isActive={isActive}
-            videoProps={videoProps}
-            mediaContainerStyle={mediaContainerStyle}
-            imageStyles={imageStyles}
-            imageProps={imageProps}
-            videoDuration={videoDuration}
-            loaderColor={loaderColor}
-            loaderBackgroundColor={loaderBackgroundColor}
+    <>
+      <StoryAnimation x={x} index={index}>
+        <Animated.View style={[animatedStyles, { justifyContent: "flex-end" }]}>
+          <Progress
+            active={isActive}
+            activeStory={activeStoryIndex}
+            progress={progress}
+            length={stories.length}
+            progressColor={progressColor}
+            progressActiveColor={progressActiveColor}
+            progressContainerStyle={progressContainerStyle}
           />
-          <Animated.View
-            style={[
-              hideOverlayViewOnLongPress ? contentStyles : {},
-              ListStyles.content,
-            ]}
-            pointerEvents="auto"
-          >
-            {imageOverlayView}
+          <Animated.View style={ListStyles.container}>
+            <StoryImage
+              stories={stories}
+              activeStory={activeStory}
+              defaultStory={stories[lastSeenIndex + 1] ?? stories[0]}
+              isDefaultVideo={
+                (stories[lastSeenIndex + 1]?.mediaType ??
+                  stories[0]?.mediaType) === "video"
+              }
+              onImageLayout={onImageLayout}
+              onLoad={onLoad}
+              paused={paused}
+              isActive={isActive}
+              videoProps={videoProps}
+              mediaContainerStyle={mediaContainerStyle}
+              imageStyles={imageStyles}
+              imageProps={imageProps}
+              videoDuration={videoDuration}
+              loaderColor={loaderColor}
+              loaderBackgroundColor={loaderBackgroundColor}
+            />
             <Animated.View
-              style={[contentStyles, ListStyles.content]}
-              pointerEvents="box-none"
+              style={[
+                hideOverlayViewOnLongPress ? contentStyles : {},
+                ListStyles.content,
+              ]}
+              pointerEvents="auto"
             >
-              <StoryHeader {...props} />
-              <StoryContent
-                stories={stories}
-                active={isActive}
-                activeStory={activeStory}
-              />
+              {imageOverlayView}
+              <Animated.View
+                style={[contentStyles, ListStyles.content]}
+                pointerEvents="box-none"
+              >
+                <StoryHeader {...props} />
+                <StoryContent
+                  stories={stories}
+                  active={isActive}
+                  activeStory={activeStory}
+                />
+              </Animated.View>
             </Animated.View>
           </Animated.View>
         </Animated.View>
-        <StoryFooter
-          stories={stories}
-          active={isActive}
-          activeStory={activeStory}
-        />
-      </Animated.View>
-    </StoryAnimation>
+      </StoryAnimation>
+      <StoryFooter
+        stories={stories}
+        active={isActive}
+        activeStory={activeStory}
+      />
+    </>
   );
 };
 
