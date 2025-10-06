@@ -45,14 +45,14 @@ const StoryHeader: FC<StoryHeaderProps> = ({
         style={[HeaderStyles.left, headerStyle]}
         onPress={() => onStoryHeaderPress?.()}
       >
-        {Boolean(avatarSource) && (
+        {/* {Boolean(avatarSource) && (
           <View
             style={[HeaderStyles.avatar, { borderRadius: styles.borderRadius }]}
           >
             <Image source={avatarSource!} style={styles} />
           </View>
         )}
-        {Boolean(name) && <Text style={textStyle}>{name}</Text>}
+        {Boolean(name) && <Text style={textStyle}>{name}</Text>} */}
       </Pressable>
       <TouchableOpacity
         onPress={onClose}

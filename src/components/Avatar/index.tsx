@@ -6,6 +6,7 @@ import Animated, {
   useDerivedValue,
   withTiming,
 } from "react-native-reanimated";
+import LinearGradient from "react-native-linear-gradient";
 import { StoryAvatarProps } from "../../core/dto/componentsDTO";
 import AvatarStyles from "./Avatar.styles";
 import Loader from "../Loader";
@@ -55,6 +56,8 @@ const StoryAvatar: FC<StoryAvatarProps> = ({
     return null;
   }
 
+  const borderRadius = avatarBorderRadius ?? size / 2;
+
   return (
     <View style={AvatarStyles.name}>
       <View style={AvatarStyles.container}>
@@ -69,6 +72,21 @@ const StoryAvatar: FC<StoryAvatarProps> = ({
             color={loaderColor}
             size={size + AVATAR_OFFSET * 2}
           />
+
+          <LinearGradient
+            colors={["#D86CFF", "#223BA6"]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 0, y: 1 }}
+            style={{
+              width: size,
+              height: size,
+              borderRadius: borderRadius,
+              position: "absolute",
+              top: AVATAR_OFFSET,
+              left: AVATAR_OFFSET,
+            }}
+          />
+
           <AnimatedImage
             source={avatarSource}
             style={[
@@ -77,7 +95,7 @@ const StoryAvatar: FC<StoryAvatarProps> = ({
               {
                 width: size,
                 height: size,
-                borderRadius: avatarBorderRadius ?? size / 2,
+                borderRadius: borderRadius,
               },
             ]}
             testID="storyAvatarImage"

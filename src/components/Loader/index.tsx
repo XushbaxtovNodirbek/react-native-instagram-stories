@@ -96,7 +96,7 @@ const Loader: FC<StoryLoaderProps> = ({
 
   // Har bir segment uchun dasharray va dashoffset hisoblash
   const segments = useMemo(() => {
-    if (count < 3) {
+    if (count < 2) {
       return [
         {
           dashArray: [CIRCUMFERENCE],
@@ -141,7 +141,7 @@ const Loader: FC<StoryLoaderProps> = ({
           strokeLinecap="round"
           strokeDasharray={segment.dashArray}
           strokeDashoffset={segment.dashOffset}
-          transform={`rotate(${segment.rotation} ${size / 2} ${size / 2})`}
+          transform={`rotate(${segment.rotation + 4} ${size / 2} ${size / 2})`}
           animatedProps={animatedProps}
         />
       ))}
