@@ -5,7 +5,14 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import { GestureResponderEvent, Modal, Pressable, View } from "react-native";
+import {
+  GestureResponderEvent,
+  Modal,
+  Pressable,
+  View,
+  Text,
+  Linking,
+} from "react-native";
 import Animated, {
   cancelAnimation,
   interpolate,
@@ -16,6 +23,8 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
   withTiming,
+  ZoomIn,
+  ZoomOut,
 } from "react-native-reanimated";
 import {
   HEIGHT,
@@ -31,6 +40,7 @@ import {
 import GestureHandler from "./gesture";
 import StoryList from "../List";
 import ModalStyles from "./Modal.styles";
+import { useTranslation } from "react-i18next";
 
 const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>(
   (
@@ -76,6 +86,8 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>(
     const hideElements = useSharedValue(false);
     const lastViewed = useSharedValue<{ [key: string]: number }>({});
     const firstRender = useSharedValue(true);
+    const [isToolTipVisible, setIsToolTipVisible] = React.useState(false);
+    const { t } = useTranslation();
 
     const userIndex = useDerivedValue(() => Math.round(x.value / WIDTH));
     const storyIndex = useDerivedValue(() =>
@@ -112,6 +124,7 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>(
       //   runOnJS(setVisible)(false)
       // );
       runOnJS(setVisible)(false);
+      runOnJS(setIsToolTipVisible)(false);
       lastViewed.value = {};
       cancelAnimation(animation);
     };
@@ -340,6 +353,7 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>(
 
     const onPress = ({ nativeEvent: { locationX } }: GestureResponderEvent) => {
       hideElements.value = false;
+      setIsToolTipVisible(false);
 
       if (isLongPress.value) {
         onPressOut();
@@ -419,6 +433,79 @@ const StoryModal = forwardRef<StoryModalPublicMethods, StoryModalProps>(
         >
           <GestureHandler onGestureEvent={onGestureEvent}>
             <Animated.View style={ModalStyles.container} testID="storyModal">
+              <Pressable
+                onPress={() => {
+                  let user = stories.find((u) => u.id === userId.value);
+                  let story = user?.stories.find(
+                    (s) => s.id === currentStory.value
+                  );
+                  let url = story?.contact || "";
+                  if (url) {
+                    setIsToolTipVisible(!isToolTipVisible);
+                  }
+                  paused.value = !paused.value;
+                  if (!isToolTipVisible) {
+                    stopAnimation();
+                  } else {
+                    startAnimation(true);
+                  }
+                }}
+                style={{
+                  position: "absolute",
+                  height: 400,
+                  width: 200,
+                  zIndex: 999,
+                  left: "50%",
+                  top: "50%",
+                  marginLeft: -100,
+                  marginTop: -150,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                {isToolTipVisible && (
+                  <Animated.View
+                    entering={ZoomIn}
+                    exiting={ZoomOut}
+                    style={{ width: 120, height: 50 }}
+                  >
+                    <Pressable
+                      onPress={() => {
+                        let user = stories.find((u) => u.id === userId.value);
+                        let story = user?.stories.find(
+                          (s) => s.id === currentStory.value
+                        );
+                        let url = story?.contact || "";
+                        Linking.openURL(url);
+                      }}
+                      style={{
+                        width: 120,
+                        height: 30,
+                        backgroundColor: "#4E4698",
+                        borderRadius: 12,
+                        justifyContent: "center",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Text style={{ color: "white" }}>
+                        {t("Havolaga otish")}
+                      </Text>
+                      <View
+                        style={{
+                          width: 14,
+                          height: 14,
+                          backgroundColor: "#4E4698",
+                          transform: [{ rotate: "45deg" }],
+                          position: "absolute",
+                          bottom: -7,
+                          left: 53,
+                          zIndex: -1,
+                        }}
+                      ></View>
+                    </Pressable>
+                  </Animated.View>
+                )}
+              </Pressable>
               <Pressable
                 onPressIn={onPressIn}
                 onPress={onPress}

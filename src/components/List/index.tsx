@@ -14,7 +14,7 @@ import { StoryListProps } from "../../core/dto/componentsDTO";
 import { HEIGHT } from "../../core/constants";
 import StoryContent from "../Content";
 import StoryFooter from "../Footer";
-import { View } from "react-native";
+import { Pressable, View } from "react-native";
 
 const StoryList: FC<StoryListProps> = ({
   id,
